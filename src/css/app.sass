@@ -1,0 +1,55 @@
+// app global css in Sass form
+.logo
+  width: 120px
+  display: block
+  margin: auto
+
+.logo-100
+  width: 100%
+  display: block
+  margin: auto
+
+.color-primary
+  color: $primary
+
+.background-primary
+  background: $primary
+
+.fit-100vh
+  height: 100vh - $height-main-image - $height-footer-drawer 
+
+.section-center
+  margin: auto
+.main-image
+  display: flex
+  position: relative
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  width: 100%
+  &.with-img
+    background: url('https://loremflickr.com/320/240')
+  .main
+    width: 100%
+  .content-middle
+    position: relative
+    bottom: 50px
+    display: flex
+    flex-direction: column
+    align-items: center
+    font-size: 20px
+    .info
+      display: flex
+      flex-direction: row
+  .content
+    color: #fff
+    text-align: center
+    font-size: 20px
+    display: flex
+    flex-direction: column
+
+.drawer
+  &.footer
+    height: $height-footer-drawer
+    display: flex
+    justify-content: space-between
