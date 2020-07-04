@@ -4,13 +4,13 @@
       <img src="https://loremflickr.com/320/240" alt="main image" class="main">
       <div class="content-middle">
         <q-avatar size="100px">
-          <img src="https://cdn.quasar.dev/img/avatar.png" alt="img">
+          <img :src="this.$user.img" alt="img">
         </q-avatar>
         <q-item-section class="info">
           <q-item-section>
-            <q-item-label class="color-primary" > Name </q-item-label>
+            <q-item-label class="color-primary" > {{ this.$user.name }} </q-item-label>
             <q-item-label caption>
-              Email
+              {{ this.$user.email }}
             </q-item-label>
           </q-item-section>
           <q-btn

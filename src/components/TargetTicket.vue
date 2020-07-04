@@ -10,7 +10,7 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        Country - City - Address
+        {{ this.$user.country }} - {{ this.$user.city }} - {{ this.$user.address }}
       </q-card-section>
 
       <q-separator inset />
@@ -41,6 +41,18 @@ export default {
     bancAccount: {
       type: String,
       default: 'No aplica'
+    },
+    country: {
+      type: String,
+      default: ''
+    },
+    city: {
+      type: String,
+      default: ''
+    },
+    address: {
+      type: String,
+      default: ''
     },
     updatedAt: {
       type: String,

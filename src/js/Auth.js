@@ -1,20 +1,21 @@
 import axios from 'axios'
-// import Vue from 'vue'
+import Data from './Data'
 
-export default class AuthUser {
+export default class AuthUser extends Data {
   constructor (email, password) {
+    super()
     this.email = email
     this.password = password
   }
 
   login (callback) {
-    axios.post('http://localhost:3000/api/v1/login/user', {
+    axios.post(`${this.url}/api/v1/login/user`, {
       email: this.email,
       password: this.password
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Origin': this.url,
         'Access-Control-Allow-Credentials': true
       }
     })

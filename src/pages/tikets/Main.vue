@@ -12,6 +12,7 @@
 
 <script>
 import TargetTicket from 'components/TargetTicket'
+import Ticket from '../../js/Ticket'
 
 export default {
   name: 'PageMainTiket',
@@ -20,28 +21,18 @@ export default {
   },
   data () {
     return {
-      tickets: [
-        {
-          id: 1,
-          total: 1200,
-          payment: 'devit',
-          bancAccount: '1222233334',
-          updatedAt: '2020-07-01T23:18:46.000Z'
-        },
-        {
-          id: 2,
-          total: 1500,
-          payment: 'oxxo',
-          updatedAt: '2020-07-01T23:18:46.000Z'
-        },
-        {
-          id: 3,
-          total: 1222,
-          payment: 'paypal',
-          updatedAt: '2020-07-01T23:18:46.000Z'
-        }
-      ]
+      tickets: []
     }
+  },
+  created () {
+    const ticketData = new Ticket(this.$token)
+
+    ticketData.getPerUser(this.$user.id, (err, ticket) => {
+      if (err) {
+        return console.error(err)
+      }
+      this.tickets = ticket.data.tickets
+    })
   }
 }
 </script>

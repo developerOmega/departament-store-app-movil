@@ -3,9 +3,10 @@
      <q-select
         filled
         v-model="brand"
+        @input="producAction"
         :options="brands"
         option-value="id"
-        option-label="desc"
+        option-label="name"
         option-disable="inactive"
         emit-value
         map-options
@@ -16,6 +17,7 @@
 
       <q-select
         filled
+        @input="producAction"
         v-model="type"
         :options="types"
         option-value="id"
@@ -40,6 +42,9 @@
 
 <script>
 import TargetProduct from 'components/TargetProduct.vue'
+import Product from '../../js/Product'
+import Type from '../../js/Type'
+import Brand from '../../js/Brand'
 
 export default {
   name: 'PageMainProduct',
@@ -50,73 +55,45 @@ export default {
     return {
       brand: null,
       type: null,
-      brands: [
-        {
-          id: 1,
-          desc: 'Nike'
-        },
-        {
-          id: 2,
-          desc: 'Adidas'
-        },
-        {
-          id: 3,
-          desc: 'Vans'
-        },
-        {
-          id: 4,
-          desc: 'Mascara del Latex'
-        },
-        {
-          id: 5,
-          desc: 'Suprime'
-        }
-      ],
-      types: [
-        {
-          id: 1,
-          name: 'T-shirts'
-        },
-        {
-          id: 2,
-          name: 'Sneakers'
-        },
-        {
-          id: 3,
-          name: 'Jackets'
-        },
-        {
-          id: 4,
-          name: 'Bags'
-        }
-      ],
-      products: [
-        {
-          id: 1,
-          name: 'Playera Adidas',
-          description: 'La plarera de adidas es grande',
-          price: 1200,
-          brand_id: 1,
-          img: 'https://www.playerasmark.com/wp-content/uploads/2017/10/blanco-verde-bandera.jpg'
-        },
-        {
-          id: 2,
-          name: 'Playera Nike',
-          description: 'La plarera de nike es grande',
-          price: 1500,
-          brand_id: 2,
-          img: 'https://cdn.shopify.com/s/files/1/1679/0139/products/CHARLIE_H_78d9480c-a596-4c19-b697-f0218c2cd72c_800x.jpg?v=1581982721'
-        },
-        {
-          id: 3,
-          name: 'Playera Suprime',
-          description: 'La plarera de suprime es grande',
-          price: 15000,
-          brand_id: 3,
-          img: 'https://cdn.shopify.com/s/files/1/0058/9276/7855/products/RPTSCOL-CRACK_NEGRO_01.png?v=1579714420'
-        }
-      ]
+      brands: [],
+      types: [],
+      products: []
     }
+  },
+  methods: {
+    producAction: function () {
+      const productData = new Product(this.$token)
+      productData.get(this.type, this.brand, (err, product) => {
+        if (err) {
+          return console.error(err)
+        }
+
+        this.products = product.data.products
+      })
+    },
+    typeAction: function () {
+      const typeData = new Type(this.$token)
+      typeData.get((err, type) => {
+        if (err) {
+          return console.error(err)
+        }
+        this.types = type.data.types
+      })
+    },
+    brandAction: function () {
+      const brandData = new Brand(this.$token)
+      brandData.get((err, brand) => {
+        if (err) {
+          return console.error(err)
+        }
+        this.brands = brand.data.brands
+      })
+    }
+  },
+  created () {
+    this.producAction()
+    this.typeAction()
+    this.brandAction()
   }
 }
 </script>

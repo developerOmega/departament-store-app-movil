@@ -43,6 +43,10 @@
 </template>
 
 <script>
+
+import AuthUser from '../../js/Auth'
+import Vue from 'vue'
+
 export default {
   name: 'PageLogin',
   data () {
@@ -53,7 +57,15 @@ export default {
   },
   methods: {
     login: function () {
-      console.log('Login')
+      const auth = new AuthUser(this.email, this.password)
+      auth.login((err, user) => {
+        if (err) {
+          console.error(err)
+        }
+        Vue.prototype.$token = user.data.token
+        Vue.prototype.$user = user.data.user
+        console.log('TOKEN DESDE LA VISTA', this.$token)
+      })
     }
   }
 }

@@ -38,9 +38,9 @@
             class="content"
           >
             <q-avatar size="100px">
-              <img src="https://cdn.quasar.dev/img/avatar.png">
+              <img :src="this.$user.img">
             </q-avatar>
-            <div> Name </div>
+            <div> {{this.$user.name}} </div>
           </q-item>
         </div>
         <q-scroll-area class="col-8">

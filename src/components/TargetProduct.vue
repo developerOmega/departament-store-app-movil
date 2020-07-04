@@ -12,7 +12,7 @@
       </q-card-section>
       <q-separator inset />
       <q-card-section class="q-pt-none">
-        <div class="text-subtitle2">by {{ brand_id }} </div>
+        <div class="text-subtitle2">by {{ Brand.name }}</div>
         <div>
           {{ description }}
         </div>
@@ -45,9 +45,12 @@ export default {
       type: String,
       default: ''
     },
-    brand_id: {
+    brandId: {
       type: Number,
       default: 0
+    },
+    Brand: {
+      type: Object
     }
   },
   computed: {
