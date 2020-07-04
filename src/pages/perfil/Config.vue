@@ -2,6 +2,7 @@
   <div class="q-pa-md">
     <q-form
       class="q-mt-md"
+      @submit="userCreateFileAction()"
     >
       <div class="text-h6"> Modificar Imagen de perfil </div>
       <q-file
@@ -18,6 +19,7 @@
         </template>
       </q-file>
       <q-btn
+        type="submit"
         label="Guardar"
         color="primary"
         text-color="white"
@@ -29,6 +31,7 @@
 
     <q-form
       class="q-gutter-md q-mt-md"
+      @submit="userUpdateAction"
     >
       <div class="text-h6"> Modificar Nombre </div>
 
@@ -55,6 +58,7 @@
       <q-btn
         label="Guardar"
         color="primary"
+        type="submit"
         text-color="white"
         class="q-my-sm"
       />
@@ -64,6 +68,7 @@
 
     <q-form
       class="q-gutter-md q-mt-md"
+      @submit="userUpdateAddressAction"
     >
       <div class="text-h6"> Modificar direccion </div>
 
@@ -98,6 +103,7 @@
       />
 
       <q-btn
+        type="submit"
         label="Guardar"
         color="primary"
         text-color="white"
@@ -108,6 +114,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import User from '../../js/User'
 export default {
   name: 'PageConfigPerfil',
@@ -135,6 +142,53 @@ export default {
         this.country = this.user.country
         this.city = this.user.city
         this.address = this.user.address
+      })
+    },
+    userUpdateAction: function () {
+      const body = {
+        name: this.name,
+        email: this.email
+      }
+      this.userData.update(this.$user.id, body, (err, user) => {
+        if (err) {
+          return console.error(err)
+        }
+        this.user = user.data.user
+      })
+    },
+    userUpdateAddressAction () {
+      const body = {
+        country: this.country,
+        city: this.city,
+        address: this.address
+      }
+      this.userData.update(this.$user.id, body, (err, user) => {
+        if (err) {
+          return console.error(err)
+        }
+        this.user = user.data.user
+      })
+    },
+    userCreateFileAction () {
+      console.log(this.img)
+      this.userData.createFile(this.$user.id, this.img, (err, user) => {
+        if (err) {
+          console.warn(err)
+          this.userUpdateFileAction()
+          return
+        }
+        this.user = user.data.user
+        Vue.prototype.$user = this.user
+      })
+    },
+    userUpdateFileAction: function () {
+      this.userData.updateFile(this.$user.id, this.img, (err, user) => {
+        if (err) {
+          return console.error(err)
+        }
+        console.log(user)
+        this.user = user.data.user
+        Vue.prototype.$user = this.user
       })
     }
   },

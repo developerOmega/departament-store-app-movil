@@ -18,4 +18,29 @@ export default class Ticket extends Data {
       .then(data => callback(null, data))
       .catch(err => callback(err))
   }
+
+  post (body, callback) {
+    axios.post(`${this.url}/api/v1/tickets`, body, {
+      headers: {
+        Authorization: this.token,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(data => callback(null, data))
+      .catch(err => callback(err))
+  }
+
+  update (id, body, callback) {
+    console.log(body)
+    axios.put(`${this.url}/api/v1/tickets/${id}`, body, {
+      headers: {
+        Authorization: this.token,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': this.url,
+        'Access-Control-Allow-Credentials': true
+      }
+    })
+      .then(data => callback(null, data))
+      .catch(err => callback(err))
+  }
 }

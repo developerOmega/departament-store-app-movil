@@ -12,7 +12,14 @@
         icon="shopping_cart"
         :done="done1"
       >
-        <TargetShoping/>
+        <TargetShoping
+          v-bind:products="shopingCart"
+          v-bind:payment="payment"
+          v-bind:bancAccount="bancAccount"
+          @delete-product="deleteProduct"
+          @update-payment='updatePayment'
+          @update-banc-account="updateBancAccount"
+        />
 
         <q-stepper-navigation>
           <q-btn @click="() => { done1 = true; step = 2 }" color="primary" label="Continuar" />
@@ -40,9 +47,14 @@
         icon="monetization_on"
         :done="done3"
       >
-        <TargetCheckShoping/>
+        <TargetCheckShoping
+          v-bind:products="shopingCart"
+          v-bind:payment="payment"
+          v-bind:bancAccount="bancAccount"
+          @step-one="stepOne"
+        />
         <q-stepper-navigation>
-          <q-btn color="primary" @click="done3 = true" label="Comprar" />
+          <q-btn color="primary" @click="ticketPostAction" label="Comprar" />
           <q-btn flat @click="step = 2" color="primary" label="Atras" class="q-ml-sm" />
         </q-stepper-navigation>
       </q-step>
@@ -54,6 +66,10 @@
 import TargetShoping from 'components/shop_component/TargetShoping'
 import TargetCheckAddress from 'components/shop_component/TargetCheckAddress'
 import TargetCheckShoping from 'components/shop_component/TargetCheckShoping'
+import Vue from 'vue'
+
+import Ticket from '../../js/Ticket'
+import TicketProduct from '../../js/TicketProduct'
 
 export default {
   name: 'PageMainShoping',
@@ -67,7 +83,12 @@ export default {
       step: 1,
       done1: false,
       done2: false,
-      done3: false
+      done3: false,
+      shopingCart: this.$products,
+      payment: 'oxxo',
+      bancAccount: '',
+      ticketData: new Ticket(this.$token),
+      ticketProductData: new TicketProduct(this.$token)
     }
   },
 
@@ -77,7 +98,67 @@ export default {
       this.done2 = false
       this.done3 = false
       this.step = 1
+    },
+    deleteProduct (data) {
+      this.shopingCart.splice(this.shopingCart.indexOf(data), 1)
+      Vue.prototype.$shopingCart = this.$shopingCart
+    },
+    updatePayment (payment) {
+      this.payment = payment
+    },
+    updateBancAccount (bancAccount) {
+      this.bancAccount = bancAccount
+    },
+    stepOne (step) {
+      this.step = step
+      this.done2 = false
+      this.done3 = false
+    },
+    ticketUpdateAction (ticketId) {
+      console.log('asasdasdasd', ticketId)
+      this.ticketData.update(ticketId, { total: 10 }, (err, ticket) => {
+        if (err) {
+          return console.error(err)
+        }
+        console.log('La compra se ha realizado con exito')
+      })
+    },
+    ticketProductPostAction (ticket) {
+      let count = 0
+      this.shopingCart.forEach(product => {
+        this.ticketProductData.post(ticket.id, product.id, (err, ticketProduct) => {
+          if (err) {
+            return console.error(err)
+          }
+
+          if (count === this.shopingCart.length - 1) {
+            this.ticketUpdateAction(ticket.id)
+          }
+          count++
+        })
+      })
+    },
+    ticketPostAction () {
+      const body = {
+        payment: this.payment,
+        bancAccount: parseInt(this.bancAccount)
+      }
+
+      if (this.payment !== 'devit') {
+        delete body.bancAccount
+      }
+      console.log('"ESt no sirve allacxscas"', body, this.payment)
+
+      this.ticketData.post(body, (err, ticket) => {
+        if (err) {
+          return console.error(err)
+        }
+        this.ticketProductPostAction(ticket.data.ticket)
+      })
     }
+  },
+  created () {
+    console.log('Estos son todos los productos', this.$products)
   }
 }
 </script>

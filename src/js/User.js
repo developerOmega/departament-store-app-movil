@@ -27,11 +27,13 @@ export default class User extends Data {
   }
 
   createFile (id, img, callback) {
-    axios.post(`${this.url}/api/v1/login/user${id}`, { img }, {
+    const formData = new FormData()
+    formData.append('img', img)
+
+    axios.post(`${this.url}/api/v1/files/users/${id}`, formData, {
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': this.url,
-        'Access-Control-Allow-Credentials': true
+        Authorization: this.token,
+        'Content-Type': 'multipart/form-data'
       }
     })
       .then((data) => callback(null, data))
@@ -39,11 +41,12 @@ export default class User extends Data {
   }
 
   updateFile (id, img, callback) {
-    axios.put(`${this.url}/api/v1/login/user${id}`, { img }, {
+    const formData = new FormData()
+    formData.append('img', img)
+    axios.put(`${this.url}/api/v1/files/users/${id}`, formData, {
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': this.url,
-        'Access-Control-Allow-Credentials': true
+        Authorization: this.token,
+        'Content-Type': 'multipart/form-data'
       }
     })
       .then((data) => callback(null, data))

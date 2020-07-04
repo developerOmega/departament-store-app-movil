@@ -22,6 +22,7 @@
         size="lg"
         icon="add_shopping_cart"
         class="q-mr-md"
+        @click="setProduct"
       />
       <q-input
         outlined
@@ -35,6 +36,7 @@
 
 <script>
 import Product from '../../js/Product'
+import Vue from 'vue'
 
 export default {
   name: 'PageShowProduct',
@@ -44,6 +46,14 @@ export default {
       price: 1,
       product: {},
       brand: {}
+    }
+  },
+  methods: {
+    setProduct: function () {
+      this.$products.push(this.product)
+      //  quantity: this.quantity
+      console.log(this.$products)
+      Vue.prototype.$products = this.$products
     }
   },
   created () {

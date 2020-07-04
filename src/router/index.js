@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import routes from './routes'
 
 // Vue.prototype.$token = ''
+Vue.prototype.$products = []
 
 Vue.use(VueRouter)
 
