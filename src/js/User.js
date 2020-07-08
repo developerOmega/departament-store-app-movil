@@ -43,6 +43,7 @@ export default class User extends Data {
   updateFile (id, img, callback) {
     const formData = new FormData()
     formData.append('img', img)
+
     axios.put(`${this.url}/api/v1/files/users/${id}`, formData, {
       headers: {
         Authorization: this.token,

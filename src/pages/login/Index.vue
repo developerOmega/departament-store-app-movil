@@ -65,6 +65,7 @@ export default {
         Vue.prototype.$token = user.data.token
         Vue.prototype.$user = user.data.user
         console.log('TOKEN DESDE LA VISTA', this.$token)
+        this.$router.push('/')
       })
     }
   }

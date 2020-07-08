@@ -67,6 +67,8 @@
             dense
             icon="exit_to_app"
             size="lg"
+            to="/login"
+            @click="logout"
           />
         </div>
     </q-drawer>
@@ -93,6 +95,7 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
+import Vue from 'vue'
 
 export default {
   name: 'MainLayout',
@@ -118,6 +121,20 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    logout: function () {
+      Vue.prototype.$user = {}
+      Vue.prototype.$token = ''
+      Vue.prototype.$products = []
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (!vm.$user || !vm.$user.id) {
+        vm.$router.push('/login')
+      }
+    })
   }
 }
 </script>
