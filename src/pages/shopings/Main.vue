@@ -118,9 +118,10 @@ export default {
       console.log('asasdasdasd', ticketId)
       this.ticketData.update(ticketId, { total: 10 }, (err, ticket) => {
         if (err) {
+          this.notifyErrorShoping()
           return console.error(err)
         }
-        console.log('La compra se ha realizado con exito')
+        this.notifyPositiveShoping()
       })
     },
     ticketProductPostAction (ticket) {
@@ -128,6 +129,7 @@ export default {
       this.shopingCart.forEach(product => {
         this.ticketProductData.post(ticket.id, product.id, (err, ticketProduct) => {
           if (err) {
+            this.notifyErrorShoping()
             return console.error(err)
           }
 
@@ -147,13 +149,25 @@ export default {
       if (this.payment !== 'devit') {
         delete body.bancAccount
       }
-      console.log('"ESt no sirve allacxscas"', body, this.payment)
 
       this.ticketData.post(body, (err, ticket) => {
         if (err) {
+          this.notifyErrorShoping()
           return console.error(err)
         }
         this.ticketProductPostAction(ticket.data.ticket)
+      })
+    },
+    notifyPositiveShoping: function () {
+      this.$q.notify({
+        type: 'positive',
+        message: 'La compra se ha realizado con éxito'
+      })
+    },
+    notifyErrorShoping: function () {
+      this.$q.notify({
+        type: 'negative',
+        message: 'Ocurrio un error'
       })
     }
   },

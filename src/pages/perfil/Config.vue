@@ -151,9 +151,11 @@ export default {
       }
       this.userData.update(this.$user.id, body, (err, user) => {
         if (err) {
+          this.notifyError()
           return console.error(err)
         }
         this.user = user.data.user
+        this.notifyPositiveInfo()
       })
     },
     userUpdateAddressAction () {
@@ -164,9 +166,11 @@ export default {
       }
       this.userData.update(this.$user.id, body, (err, user) => {
         if (err) {
+          this.notifyError()
           return console.error(err)
         }
         this.user = user.data.user
+        this.notifyPositiveAddress()
       })
     },
     userCreateFileAction () {
@@ -179,16 +183,43 @@ export default {
         }
         this.user = user.data.user
         Vue.prototype.$user = this.user
+        this.notifyPositiveFile()
       })
     },
     userUpdateFileAction: function () {
       this.userData.updateFile(this.$user.id, this.img, (err, user) => {
         if (err) {
+          this.notifyError()
           return console.error(err)
         }
         console.log(user)
         this.user = user.data.user
         Vue.prototype.$user = this.user
+        this.notifyPositiveFile()
+      })
+    },
+    notifyPositiveFile: function () {
+      this.$q.notify({
+        type: 'positive',
+        message: 'La imagen de perfil se actualizo'
+      })
+    },
+    notifyPositiveInfo: function () {
+      this.$q.notify({
+        type: 'positive',
+        message: 'La información del perfil actualizo'
+      })
+    },
+    notifyPositiveAddress: function () {
+      this.$q.notify({
+        type: 'positive',
+        message: 'La dirección se actualizo '
+      })
+    },
+    notifyError: function () {
+      this.$q.notify({
+        type: 'negative',
+        message: 'Ocurrió un error'
       })
     }
   },

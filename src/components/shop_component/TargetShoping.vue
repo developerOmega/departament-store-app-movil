@@ -15,7 +15,7 @@
         <q-card-section> ${{ product.price }} </q-card-section>
 
         <q-card-actions>
-          <q-btn flat round icon="close" @click="deleteProduct(products)" />
+          <q-btn flat round icon="close" @click="deleteProduct(product)" />
         </q-card-actions>
       </q-card-section>
     </q-card>
@@ -93,7 +93,16 @@ export default {
       console.log('Nada')
     },
     deleteProduct: function (data) {
-      this.$emit('delete-product', data)
+      this.$q.dialog({
+        title: 'Confirmar',
+        message: `Desea eliminar "${data.name}" del carrito`,
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.$emit('delete-product', data)
+      }).onCancel(() => {
+        console.log('No se elimino :(')
+      })
     },
     updatePayment: function () {
       this.$emit('update-payment', this.payment)

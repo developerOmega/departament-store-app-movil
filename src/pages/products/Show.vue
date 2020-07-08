@@ -54,6 +54,13 @@ export default {
       //  quantity: this.quantity
       console.log(this.$products)
       Vue.prototype.$products = this.$products
+      this.notifyPositive()
+    },
+    notifyPositive: function () {
+      this.$q.notify({
+        type: 'positive',
+        message: 'El producto se ha agregado al carrito'
+      })
     }
   },
   created () {
