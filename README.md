@@ -8,7 +8,7 @@ DStore es una aplicación móvil desarrollada para simular la administración de
 
 El usuario puede realizar compras, consultar sus tickets y puede ver el catálogo que ofrece la tienda.
 
-La aplicación consume una API Rest y su documentación se puede encontrar en su repositorio git: [DStore-API](https://github.com/developerOmega/DStoreDocs).
+La aplicación consume una API Rest y su documentación se puede encontrar en su repositorio git: [DStore-API](https://github.com/developerOmega/departament-store-api).
 
 
 # Aplicación en Quasar (Dstore)
