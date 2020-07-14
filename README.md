@@ -2,29 +2,37 @@
 
 ![](https://dl.dropboxusercontent.com/s/y1hjglimtjpijmq/1594688295dstoreimg.jpg)
 
-# Quasar App (dstore)
+## Descripción
 
-A Quasar Framework app
+DStore es una aplicación móvil desarrollada para simular la administración del sistema de una tienda departamental. Para tener acceso a la plataforma el cliente tiene que estar autenticado.
 
-## Install the dependencies
+El usuario puede realizar compras, consultar sus tickets y puede ver el catálogo que ofrece la tienda.
+
+La aplicación consume una API Rest y su documentación se puede encontrar en su repositorio git: [Aquí](https://github.com/developerOmega/DStoreDocs).
+
+
+# Aplicación en Quasar (Dstore)
+
+Una aplicación del Framework Quasar 
+
+## Instalar las dependencias
 ```bash
 yarn
 ```
+o
+```bash
+npm init
+```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Comenzar a trabajar en modo de desarrollo
 ```bash
 quasar dev
 ```
 
-### Lint the files
-```bash
-yarn run lint
-```
-
-### Build the app for production
+### Ejecutar la aplicación en producción
 ```bash
 quasar build
 ```
 
-### Customize the configuration
+### Configurar
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
